@@ -3,12 +3,48 @@
 import Head from 'next/head';
 //import Link from 'next/link';
 import { useRouter } from 'next/navigation'
-
+import { useEffect } from 'react';
+import { connectDatabase, disconnectDatabase } from '../../../lib/mongo'; 
 export default function Login() {
-    const router = useRouter();
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        // Connect to MongoDB
+        const db = await connectDatabase();
+        
+        // Fetch data from API route
+        const res = await fetch(`${window.location.origin}/api/testapi`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+        console.log(data);
 
+        // Disconnect from MongoDB after fetching data
+        disconnectDatabase();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+    const router = useRouter();
+    const siiss = async()=>{
+      let res = await fetch("/api/testapi", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  let allPosts = await res.json();
+console.log(allPosts);
+  
+    }
     const signIn = () =>{
-      router.push("/admin");
+      router.push("/Admin");
    }
 
   const signUp = () =>{
@@ -23,13 +59,13 @@ export default function Login() {
       </Head>
       <header className="showcase">
         <div className="showcase-content">
-        <h1>INFOICON TECHNOLOGY PVT LTD</h1>
-          <div className="showcase-top">
-            <h1>LOGIN</h1>
-          </div>
+        <div className="logo-details">
+          <img src="/assets/img/Infoiconlogo-black.png" alt="Logo" className="logo_image" />
+        </div>
+
           <div className="formm">
             <form>
-              <h2>Welcome user!</h2>
+            
               <div className="info">
                 <input className="email" type="email" placeholder="Email" id="email" /> <br />
                 <input className="email" type="password" placeholder="Password" id="password" />
