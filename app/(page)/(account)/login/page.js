@@ -1,19 +1,25 @@
 
 "use client"
-import Head from 'next/head';
-//import Link from 'next/link';
-import { useRouter } from 'next/navigation'
 
-export default function Login() {
+import Head from 'next/head';
+import { useRouter } from 'next/navigation'
+//import User from "../../../models/User";
+export default  function Login() {
     const router = useRouter();
 
     const signIn = () =>{
-      router.push("/admin");
+      router.push("/Admin");
    }
 
   const signUp = () =>{
      router.push("/register");
   }
+
+ 
+   //const user =  User.find({});
+
+   //const user = await getCollection('users');
+   //console.log(user);
   return (
     <>
       <Head>
@@ -23,13 +29,13 @@ export default function Login() {
       </Head>
       <header className="showcase">
         <div className="showcase-content">
-        <h1>INFOICON TECHNOLOGY PVT LTD</h1>
-          <div className="showcase-top">
-            <h1>LOGIN</h1>
-          </div>
+        <div className="logo-details">
+          <img src="/assets/img/Infoiconlogo-black.png" alt="Logo" className="logo_image" />
+        </div>
+
           <div className="formm">
             <form>
-              <h2>Welcome user!</h2>
+            
               <div className="info">
                 <input className="email" type="email" placeholder="Email" id="email" /> <br />
                 <input className="email" type="password" placeholder="Password" id="password" />

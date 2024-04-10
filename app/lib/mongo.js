@@ -1,30 +1,16 @@
-// mongodb.js
+import mongoose from "mongoose";
 
-import { MongoClient } from 'mongodb'
+const connectMB = async () => {
+  try {
+    const DB_OPTIONS = {
+      dbName: "Employee_Performance",
+    };
 
-const uri = process.env.MONGODB_URI
-const options = {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-}
-
-let client
-let clientPromise
-
-if (!process.env.MONGODB_URI) {
-  throw new Error('Add Mongo URI to .env.local')
-}
-
-if (process.env.NODE_ENV === 'development') {
-
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options)
-    global._mongoClientPromise = client.connect()
+    await mongoose.connect("mongodb://localhost:27017", DB_OPTIONS);
+    console.log("Connected to MongoDB harsh");
+  } catch (error) {
+    throw new Error("Connection failed! " + error);
   }
-  clientPromise = global._mongoClientPromise
-} else {
-  client = new MongoClient(uri, options)
-  clientPromise = client.connect()
-}
+};
 
-export default clientPromise
+export default connectMB;
